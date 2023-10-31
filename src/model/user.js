@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         required: true
+    },
+    userImage: {
+        type: String,
+        required: true,
+        unique: true
     }
 });
 

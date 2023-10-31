@@ -15,10 +15,10 @@ const router = express.Router();
 
 router.post('/register',async (req, res) => {
   try {
-    const { AadharNumber, email, password, role, phoneNumber } = req.body;
+    const { AadharNumber, email, password, role, phoneNumber, userImage } = req.body;
 
     // Validate the input data (add more validation as needed)
-    if (!AadharNumber || !email || !password || !role || !phoneNumber) {
+    if (!AadharNumber || !email || !password || !role || !phoneNumber || !userImage) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -30,7 +30,7 @@ router.post('/register',async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 8);
 
-    const user = new User({ AadharNumber, email, password: hashedPassword, role, phoneNumber });
+    const user = new User({ AadharNumber, email, password: hashedPassword, role, phoneNumber , userImage});
     await user.save();
 
     res.status(201).json({ message: 'User registered successfully' });
