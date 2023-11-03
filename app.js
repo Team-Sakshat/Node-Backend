@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 
 app.use('/user', loginRouter);
 app.use('/user', registerRouter);    
-app.use('/otp', otpRouter); 
-app.use('/crowd', crowdRouter); 
+app.use('/user', otpRouter); 
+// app.use('/crowd', crowdRouter); 
 
 
 app.listen(port, () => {

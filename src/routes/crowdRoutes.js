@@ -1,14 +1,6 @@
 import express from 'express';
 const router = express.Router(); // You need to call express.Router() to create a router instance
 
-router.post('/register', (req, res) => {
-    const { aadhar, location } = req.body;
-
-    // Store the user data in your database (This part depends on your database setup)
-
-    res.status(200).json({ message: 'User registered successfully' });
-});
-
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the Earth in kilometers
 
