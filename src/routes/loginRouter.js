@@ -15,8 +15,9 @@ router.post('/login', async (req, res) => {
   const { AadharNumber, password } = req.body;
   try {
     const UserID = await User.findOne({ AadharNumber });
+    console.log(UserID);
     if (!UserID) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'Login Successfully not' });
     }
 
     console.log(password);

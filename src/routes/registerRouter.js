@@ -75,6 +75,26 @@ otpStore[phoneNumber] = otpData;
 sendOTP(phoneNumber, otp);
 
 // res.status(200).json({ message: 'OTP sent successfully' });
+
+  
+// Define the user identifier and expiration time
+// Replace with the user's identifier
+ // Set expiration time (5 minutes from now)
+
+// Create and save the OTP document
+const otpDocument = new OTPModel({
+  AadharNumber,
+  otp
 });
 
+otpDocument.save((err) => {
+  if (err) {
+    console.error('Error saving OTP:', err);
+  } else {
+    console.log('OTP saved successfully.');
+    // Send the OTP to the user (e.g., via SMS, email, or another method)
+  }
+});
+
+});
 export default router;

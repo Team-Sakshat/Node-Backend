@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import mailSender from "../routes/registerRouter";
 
 const otpSchema=new mongoose.Schema({
     AadharNumber:{
@@ -19,29 +18,6 @@ const otpSchema=new mongoose.Schema({
     }
 });
 
-// async function sendVerification(email,otp){
-//     try {
-//         const mailsend=await mailSender(AadharNumber,"Verification Email From UIDAI",sendotp(otp))
-//     } catch (error) {
-//         console.log("error occured in sending mail",error);
-//         throw error;
-//     }
-// }
+const otpData = mongoose.model('otpData', otpSchema);
 
-async function sendVerification(phoneNumber, otp) {
-    try {
-        const mailsend = await mailSender(AadharNumber, "Verification Email From UIDAI", sendotp(otp));
-    } catch (error) {
-        console.log("error occurred in sending mail", error);
-        throw error;
-    }
-}
-
-otpSchema.pre("save",async function(next){
-    if(this.isNew){
-        await sendVerification(this.AadharNumber,this.otp);
-    }
-    next();
-})
-
-module.exports=mongoose.model("OTP",otpSchema);
+export default otpData;
