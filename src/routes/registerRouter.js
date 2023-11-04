@@ -10,6 +10,7 @@ const accountSid = process.env.Account_SID;
 const authToken = process.env.authTOKEN;
 const twilioPhoneNumber = process.env.twilioPnumber;
 const client = new twilio(accountSid, authToken);
+import OTPModel from "../model/otp.js"
 
 router.post('/register',async (req, res) => {
   try {
@@ -65,14 +66,25 @@ const phoneNumber = `+91${PhoneNumber}`; // Assuming the country code is 91 for 
 
 const otp = generateOTP();
 
-// Store the OTP along with an expiration timestamp (e.g., 5 minutes)
-const otpData = {
-  otp,
-  expiresAt: Date.now() + 5 * 60 * 1000, // 5 minutes in milliseconds
-};
-otpStore[phoneNumber] = otpData;
-
 sendOTP(phoneNumber, otp);
+
+
+// Create an instance of the OTPModel
+const otpData = new OTPModel({
+  AadharNumber: User_ID.AadharNumber,
+  OTP: otp, // Example OTP value
+  expiresAt: new Date(), // Example expiration date
+});
+
+// Save the instance to the database
+otpData.save()
+  .then((savedData) => {
+    console.log('OTP data saved:', savedData);
+  })
+  .catch((error) => {
+    console.error('Error saving OTP data:', error);
+  });
+
 
 // res.status(200).json({ message: 'OTP sent successfully' });
 
@@ -82,19 +94,19 @@ sendOTP(phoneNumber, otp);
  // Set expiration time (5 minutes from now)
 
 // Create and save the OTP document
-const otpDocument = new OTPModel({
-  AadharNumber,
-  otp
-});
+// const otpDocument = new OTPModel({
+//   AadharNumber,
+//   otp
+// });
 
-otpDocument.save((err) => {
-  if (err) {
-    console.error('Error saving OTP:', err);
-  } else {
-    console.log('OTP saved successfully.');
-    // Send the OTP to the user (e.g., via SMS, email, or another method)
-  }
-});
+// otpDocument.save((err) => {
+//   if (err) {
+//     console.error('Error saving OTP:', err);
+//   } else {
+//     console.log('OTP saved successfully.');
+//     // Send the OTP to the user (e.g., via SMS, email, or another method)
+//   }
+// });
 
 });
 export default router;

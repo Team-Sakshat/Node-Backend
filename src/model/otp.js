@@ -3,13 +3,12 @@ import mongoose from "mongoose";
 const otpSchema=new mongoose.Schema({
     AadharNumber:{
         type:String,
-        trim:true,
         required:true,
+        unique:true
     },
-    otp:{
+    OTP:{
         type:String,
-        required:true,
-        trim:true,
+        required:true
     },
     createdAt:{
         type:Date,
@@ -18,6 +17,6 @@ const otpSchema=new mongoose.Schema({
     }
 });
 
-const otpData = mongoose.model('otpData', otpSchema);
+const otpData = mongoose.model('OTP', otpSchema);
 
 export default otpData;

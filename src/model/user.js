@@ -19,18 +19,15 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         required: true,
-        unique: true
+        phoneNumber: true
     },
     userImage: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 });
 
 const user = mongoose.model('user', userSchema);
 
 export default user;
-
-
-
-

@@ -13,25 +13,26 @@ function generateToken(user) {
 
 router.post('/login', async (req, res) => {
   const { AadharNumber, password } = req.body;
+  console.log("addhar->",AadharNumber,"password->",password);
   try {
     const UserID = await User.findOne({ AadharNumber });
-    console.log(UserID);
+    console.log("login user id->",UserID);
     if (!UserID) {
       return res.status(401).json({ message: 'Login Successfully not' });
     }
 
-    console.log(password);
-    console.log(UserID.password);
+    console.log("password->",password);
+    console.log("userhased password=>",UserID.password);
     const passwordMatch = await bcrypt.compare(password, UserID.password);
-
+    console.log("password match->",passwordMatch);
     if (!passwordMatch) {
-      const err = new Error('Password does not match');
+      const err = new Error('Enter the correct password');
       err.status = 401;
       throw err;
     };
 
     const token = generateToken(UserID);
-
+    console.log("token->",token);
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
     console.log(error);
